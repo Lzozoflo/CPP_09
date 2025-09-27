@@ -83,7 +83,7 @@ void	BitcoinExchange::output( std::string str ) {
 		}
 
 
-		if (this->pars_date(key)){
+		if (!this->pars_date(key)){
 			std::cout << RED << "Error: bad input in "<< str <<" -> '" << tmp << "'" << RESET << std::endl;
 		}
 		(void)value;
@@ -115,15 +115,16 @@ float	BitcoinExchange::convert(std::string tmp) {
 }
 
 bool	BitcoinExchange::pars_date(std::string &tmp) {
-	(void)tmp;
-	// std::stringstream ss(tmp);
-	// int years , mounth, day, value;
-	// char first_char, second_char, third_char;
-	// ss >> years >> first_char >> mounth >> second_char >> day >> third_char >>  >>  >>
+	std::stringstream ss(tmp);
+	int years , mounth, day;
+	char first_char, second_char;
+	ss >> years >> first_char >> mounth >> second_char >> day;
+	if (first_char != "-" || second_char != "-") {
+		return true;
+	}
 
-
+	std::cout << years << "." << mounth << "." << day << std::endl;
 	return false;
-	return true;
 }
 
 
