@@ -6,7 +6,7 @@
 int main(int ac, char **av)
 {
 	if (ac != 2){
-		std::cerr << "input file needed." << std::endl;
+		std::cout << "Error: could not open file." << std::endl;
 		return (1);
 	}
 	try {
