@@ -18,6 +18,9 @@ BitcoinExchange::BitcoinExchange(){
 	// 3. Read all the config_file.
 	std::string tmp;
 	std::getline(sfile, tmp);
+	if (tmp.compare("date,exchange_rate")){
+		throw (std::string("bad format in data.csv. -> " + tmp + "\nexpected: 'date,exchange_rate'"));
+	}
 	while (std::getline(sfile, tmp)) {
 
 		if (tmp.find_first_of(',') == std::string::npos && tmp.find_first_of(',') != tmp.find_last_of(',')) {
@@ -57,6 +60,9 @@ void	BitcoinExchange::output( std::string str ) {
 	// 3. Read all the config_file.
 	std::string tmp;
 	std::getline(sfile, tmp);
+	if (tmp.compare("date | value")){
+		throw (std::string("bad format in data.csv. -> " + tmp + "\nexpected: 'date | value'"));
+	}
 	while (std::getline(sfile, tmp)) {
 
 		// std::cout << "tmp: "<< tmp << std::endl;
@@ -66,7 +72,7 @@ void	BitcoinExchange::output( std::string str ) {
 			continue;
 		}
 		std::string key = tmp.substr(0, tmp.find_first_of(" | "));
-		double value = 0;
+		float value = 0;
 		try
 		{
 			value = this->convert(tmp.substr(tmp.find_last_of(" | ") + 1, tmp.length()));
@@ -80,16 +86,15 @@ void	BitcoinExchange::output( std::string str ) {
 			}
 		}
 
-
 		if (!this->pars_date(key)){
 			std::cout << RED << "Error: bad input => " << key << RESET << std::endl;
 			continue;
 		}
-		(void)value;
-		std::cout << key << " => " << value << " = not now" << std::endl;
-		// if (this->pars_date(tmp))
 
+		this->total_at_date(key, value);
+		// std::cout << key << " => " << value << " = not now" << std::endl;
 	}
+
 
 	if (sfile.bad()) {
 		throw(std::string("Error: Critical error when reading the file."));
@@ -101,15 +106,37 @@ void	BitcoinExchange::output( std::string str ) {
 }
 
 
+void	BitcoinExchange::total_at_date(std::string key, float value) {
+	(void)key;(void)value;
 
-double	BitcoinExchange::convert(std::string tmp) {
+	std::map<std::string, std::string>::iterator it = this->_data_csv.lower_bound(key);
+	std::string str;
+	if (it != this->_data_csv.end()) {
+		// std::cout << "Clé: " << it->first << ", Valeur: " << it->second << std::endl;
+		str = it->second;
+	}
+	else {
+		std::map<std::string, std::string>::iterator iter = this->_data_csv.end();
+		iter--;
+		str = iter->second;
+		// std::cout << "Clé: " << iter->first << ", Valeur: " << iter->second << std::endl;
+	}
+	std::stringstream ss(str);
+	float res = 0;
+	ss >> res;
+	float total = res * value;
+	std::cout << key << " => " << value << " = " << total << std::endl;
+
+}
+
+float	BitcoinExchange::convert(std::string tmp) {
 	// std::cout << tmp << std::endl;
 	std::stringstream ss(tmp.c_str());
-	double res = 0;
+	float res = 0;
 	ss >> res;
 	if (!ss.eof() || ss.fail()) {
 		throw (1);
-	} else if (res > static_cast<double>(2147483647)) {
+	} else if (res > static_cast<float>(1000)) {
 		throw (std::string("Error: too large a number."));
 	} else if (res < 0){
 		throw (std::string("Error: not a positive number."));
@@ -117,7 +144,7 @@ double	BitcoinExchange::convert(std::string tmp) {
 	return (res);
 }
 
-bool is_31day(int mounth){
+bool	is_31day(int mounth){
 	return (mounth == 1 || mounth == 3 || mounth == 5 || mounth == 7 || mounth == 8 || mounth == 10 || mounth == 12);
 }
 
@@ -142,12 +169,10 @@ bool	BitcoinExchange::pars_date(std::string &tmp) {
 		}
 		return true;
 	} else {
-		std::cout << "wesh bizarre cette data la" << std::endl;
+		std::cout<< RED << "false if i dont have thit one" << RESET << std::endl;
 		return false;
 	}
 }
-
-
 
 void	BitcoinExchange::print_data() {
 

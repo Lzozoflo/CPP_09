@@ -17,7 +17,8 @@ class BitcoinExchange {
 		std::map<std::string, std::string> _data_csv;
 		void	print_data();
 		bool	pars_date(std::string &tmp);
-		double	convert(std::string tmp);
+		float	convert(std::string tmp);
+		void	total_at_date(std::string key, float value);
 
 	public:
 		BitcoinExchange( void );
