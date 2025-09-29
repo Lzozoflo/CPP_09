@@ -14,7 +14,8 @@
 class RPN {
 
 	private:
-		RPN(void);
+		RPN( void );
+		std::stack<int> _stock;
 	public:
 		RPN(std::string str);
 
