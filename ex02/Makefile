@@ -9,8 +9,8 @@
 #############################################################################################
 
 
-# NAME				=		cpp
-NAME				=		RPN
+NAME				=		cpp
+# NAME				=		PmergeMe
 CC					=		c++
 INCLUDES			=		-I$(HEADERS_DIR)
 CPPFLAGS			=		-Wall -Werror -Wextra -std=c++98 $(INCLUDES)
