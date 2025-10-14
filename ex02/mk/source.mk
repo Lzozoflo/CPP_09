@@ -25,11 +25,11 @@ HEADERS_DIR			:=		./inc/
 HEADERS_D			:=		./incs/
 
 
-HEADERS				:=		RPN.hpp
+HEADERS				:=		PmergeMe.hpp
 
 
 
-SRC					:=		RPN.cpp	\
+SRC					:=		PmergeMe.cpp	\
 							main.cpp
 
 
