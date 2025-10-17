@@ -31,47 +31,41 @@ void			swap_for(std::vector<int> &main, size_t index, size_t size_of_pair){
 		main[index--] = tmp;
 	}
 }
+static void print_by_size_of_pair(size_t size_of_pair, const std::vector<int> &main) {
+	for (size_t i = 0; i + size_of_pair <= main.size(); i += size_of_pair) {
+		std::cout << GREEN"[";
+		for (size_t j = i; j < i + size_of_pair; j++) {
+			if (j != i)
+				std::cout << " ";
+			std::cout << main[j];
+		}
+		std::cout << "] "RESET;
+	}
+	std::cout << "\n\n";
+}
 
 
 void			recursive_pair(std::vector<int> &main, int level, std::vector<int> &pend) {
 
 	size_t size_of_pair = 1 << (level - 1);
-	// std::cout << BLUE"size_of_pair:\t"<<size_of_pair<<RESET"\n";
-	// size_t nb_of_pair = main.size() >> level;// a(x) b(x)
-	// std::cout << BLUE"nb_of_pair:\t" << nb_of_pair <<RESET"\n";
+	// std::cout << BLUE"size_of_pair: "<< size_of_pair<<"\n"RESET;
+	size_t i = (size_of_pair << 1) - 1;
 
-	if ((main.size() >> level) == 0 && level != 1) { // when now pair of pair can be
-		return;
-	}
-
-	// std::cout << YELLOW"main:\t"<< main<<RESET"\n";
-	// if (level == 1) {
-	// 	size_t i = (main.size() % 2 == 1) ? (main.size() - 1) : (main.size());
-
-	// 	while (--i > 1)
-	// 	{
-	// 		// std::cout << YELLOW"["<< main[i]<<" "<< main[i - 1]<<"] "RESET;
-	// 		if (main[i] < main[i - 1]){
-	// 			int tmp = main[i];
-	// 			main[i] = main[i - 1];
-	// 			main[i - 1] = tmp;
-	// 		}
-	// 		i--;
-	// 	}gm
-	// 	// std::cout <<"\n";
-	// }
-	// else {
-		size_t i = (size_of_pair << 1) - 1;
-
-		while (i < main.size())
-		{
-			if (main[i - size_of_pair] > main[i]) {
-				swap_for(main, i, size_of_pair);
-			}
-			i+= (size_of_pair << 1);
+	print_by_size_of_pair((level == 1) ? (size_of_pair + 1) : (size_of_pair), main);
+	while (i < main.size())
+	{
+		if (main[i - size_of_pair] > main[i]) {
+			swap_for(main, i, size_of_pair);
 		}
-	// }
-	std::cout << YELLOW"main:\t"<< main<<RESET"\n";
+		i+= (size_of_pair << 1);
+	}
+	// std::cout << GREEN"main:\t"<< main<<RESET"\n";
 
-	recursive_pair(main, ++level, pend);
+	if (!((main.size() >> level) == 1 && level != 1)) { // when now pair of pair can be
+		recursive_pair(main, ++level, pend);
+	}
+	// else {
+	// 	print_by_size_of_pair((level == 1) ? (size_of_pair + 1) : (size_of_pair), main);
+	// }
+
 }
