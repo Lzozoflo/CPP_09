@@ -45,7 +45,7 @@ std::string		PmergeMe::_stock(int ac, char **av) {
 	}
 	std::stringstream ss("");
 	for (vec_iterator vit = this->_vec.begin(); vit != this->_vec.end(); vit++ ){
-		ss << *vit << " ";
+		ss << *vit << "  ";// double space
 	}
 	return (ss.str());
 }
@@ -123,12 +123,16 @@ void			PmergeMe::_expected_print( void ) {
 
 std::ostream& operator<<(std::ostream& os, const std::vector<int>& vec)
 {
+	if (vec.begin() == vec.end()) {
+		os << "(null)";
+		return os;
+	}
 	for (vec_const_iterator vcit = vec.begin(); vcit != vec.end(); vcit++ ){
 		os << *vcit;
 		std::vector<int>::const_iterator next = vcit;
 		++next;
 		if (next != vec.end())
-			os << " ";
+			os << "  ";// double space
 	}
 	os << " ";
 	return os;
