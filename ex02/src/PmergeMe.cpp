@@ -21,7 +21,7 @@ PmergeMe::~PmergeMe( void ) {}
 // }
 
 PmergeMe::PmergeMe(int ac, char **av) : _nb_of_nb(ac - 1) , _Before("Before:\t" + this->_stock(ac, av)) {
-	(void)this->_nb_of_nb;
+	// (void)this->_nb_of_nb;
 	this->_process_vector();
 	this->_process_deque();
 	this->_expected_print();
@@ -73,12 +73,12 @@ void			PmergeMe::_debug_print( void ) {
 }
 
 void			PmergeMe::_expected_print( void ) {
-	std::string str("Time To Process a range of ");
-	str +=  + this->_nb_of_nb; str += " elements with std::";
+	std::stringstream ss; ss << "Time To Process a range of " << this->_nb_of_nb << " elements with std::";
+
 	std::cout	<< this->_Before << "\n"
 				<< "After:\t" << this->_vec << "\n"
-				<< str << "vector<int> : " << (this->_end_vec - this->_start_vec) << "\n"
-				<< str << "deque<int> : " << (this->_end_deq - this->_start_deq)
+				<< ss.str() << "vector<int> : " << (this->_end_vec - this->_start_vec) << "\n"
+				<< ss.str() << "deque<int> : " << (this->_end_deq - this->_start_deq)
 				<< std::endl;
 
 }

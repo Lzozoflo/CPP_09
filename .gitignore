@@ -5,3 +5,6 @@ clean_Canonical_dir
 btc
 RPN
 PmergeMe
+*/cpp
+*/.objs
+*/deps
