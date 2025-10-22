@@ -137,3 +137,20 @@ std::ostream& operator<<(std::ostream& os, const std::vector<int>& vec)
 	os << " ";
 	return os;
 }
+
+std::ostream& operator<<(std::ostream& os, const std::vector<size_t>& vec)
+{
+	if (vec.begin() == vec.end()) {
+		os << "(null)";
+		return os;
+	}
+	for (std::vector<size_t>::const_iterator vcit = vec.begin(); vcit != vec.end(); vcit++ ){
+		os << *vcit;
+		std::vector<size_t>::const_iterator next = vcit;
+		++next;
+		if (next != vec.end())
+			os << "  ";// double space
+	}
+	os << " ";
+	return os;
+}
