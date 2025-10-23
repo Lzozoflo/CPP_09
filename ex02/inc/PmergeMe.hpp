@@ -27,13 +27,13 @@ class PmergeMe {
 
 	private:
 
-		time_t					_start_vec; //sec std::time(NULL)
+		clock_t					_start_vec; //sec std::time(NULL)
 		std::vector<size_t>		_vec;
-		time_t					_end_vec; //sec std::time(NULL)
+		clock_t					_end_vec; //sec std::time(NULL)
 
-		time_t					_start_deq; //sec std::time(NULL)
+		clock_t					_start_deq; //sec std::time(NULL)
 		std::deque<size_t>		_deq;
-		time_t					_end_deq; //sec std::time(NULL)
+		clock_t					_end_deq; //sec std::time(NULL)
 
 
 		const int				_nb_of_nb;

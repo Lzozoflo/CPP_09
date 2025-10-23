@@ -56,10 +56,14 @@ std::string		PmergeMe::_stock(int ac, char **av) {
 void			PmergeMe::_expected_print( void ) {
 	std::stringstream ss; ss << "Time To Process a range of " << this->_nb_of_nb << " elements with std::";
 
+    // time duration
+    double duration_vec = double(this->_end_vec - this->_start_vec) / CLOCKS_PER_SEC;
+    double duration_deq = double((this->_end_deq - this->_start_deq)) / CLOCKS_PER_SEC;
+
 	std::cout	<< this->_Before << "\n"
 				<< "After:\t" << this->_vec << "\n"
-				<< ss.str() << "vector<size_t> : " << (this->_end_vec - this->_start_vec) << "\n"
-				<< ss.str() << "deque<size_t> : " << (this->_end_deq - this->_start_deq)
+				<< ss.str() << "vector<size_t> :\t" << duration_vec << "s\n"
+				<< ss.str() << "deque<size_t> :\t" << duration_deq << "s"
 				<< std::endl;
 
 }
@@ -76,28 +80,29 @@ static void			iterative_pair(Container &main, int level, Container &pend, Contai
 
 
 void				PmergeMe::_process_vector( void ) {
-	this->_start_vec = std::time(NULL);
+
+	this->_start_vec = std::clock();
 	std::vector<size_t> pend, odd;
 	std::vector<size_t> pend_cmp;
 
 	recursive_pair(this->_vec, 1, pend, odd, pend_cmp);
 	// iterative_pair(this->_vec, 1, pend, odd, pend_cmp);
 
-	this->_end_vec = std::time(NULL);
+	this->_end_vec = std::clock();
 }
 
 
 
 
 void				PmergeMe::_process_deque( void ) {
-	this->_start_deq = std::time(NULL);
+	this->_start_deq = std::clock();
 	std::deque<size_t> pend, odd;
 	std::deque<size_t> pend_cmp;
 	recursive_pair(this->_deq, 1, pend, odd, pend_cmp);
 	// iterative_pair(this->_deq, 1, pend, odd, pend_cmp);
 
 
-	this->_end_deq = std::time(NULL);
+	this->_end_deq = std::clock();
 }
 
 
