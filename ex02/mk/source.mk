@@ -31,7 +31,6 @@ HEADERS				:=		PmergeMe.hpp
 
 SRC					:=		PmergeMe.cpp		\
 							PmergeMeVector.cpp	\
-							PmergeMeDeque.cpp	\
 							main.cpp
 
 
