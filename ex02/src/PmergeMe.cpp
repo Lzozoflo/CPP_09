@@ -22,11 +22,16 @@ PmergeMe::~PmergeMe( void ) {}
 // 	return (*this);
 // }
 
-PmergeMe::PmergeMe(int ac, char **av) : _nb_of_nb(ac - 1) , _Before("Before:\t" + this->_stock(ac, av)) {
+PmergeMe::PmergeMe(int ac, char **av) : _start_vec(0), _end_vec(0), _start_deq(0), _end_deq(0), _nb_of_nb(ac - 1) , _Before("Before:\t" + this->_stock(ac, av)) {
 	// (void)this->_nb_of_nb;
-	this->_process_vector();
-	this->_process_deque();
-
+	if (!this->_sorted()) {
+		this->_process_vector();
+		this->_process_deque();
+	}
+	if (!this->_sorted()) {
+		std::cerr << RED"KO!\n";
+		return ;
+	}
 	// std::cout << "VECTOR: "	<< this->_vec<< "\n";
 	// std::cout << "DEQUE: "	<< this->_deq<< "\n";
 
@@ -62,8 +67,8 @@ void			PmergeMe::_expected_print( void ) {
 
 	std::cout	<< this->_Before << "\n"
 				<< "After:\t" << this->_vec << "\n"
-				<< ss.str() << "vector<size_t> :\t" << duration_vec << "s\n"
-				<< ss.str() << "deque<size_t> :\t" << duration_deq << "s"
+				<< ss.str() << "vector<size_t> : " << duration_vec << "s\n"
+				<< ss.str() << "deque<size_t> :  " << duration_deq << "s"
 				<< std::endl;
 
 }
@@ -78,12 +83,21 @@ static void			iterative_pair(Container &main, int level, Container &pend, Contai
 
 
 
+bool					PmergeMe::_sorted( void ) {
+	
+	size_t last = 0;
+	for (std::vector<size_t>::iterator it = this->_vec.begin(); it != this->_vec.end(); it++){
+		if (*it < last)
+			return false;
+		last = *it;
+	}
+	return true;
+}
 
 void				PmergeMe::_process_vector( void ) {
 
 	this->_start_vec = std::clock();
-	std::vector<size_t> pend, odd;
-	std::vector<size_t> pend_cmp;
+	std::vector<size_t> pend, odd, pend_cmp;
 
 	recursive_pair(this->_vec, 1, pend, odd, pend_cmp);
 	// iterative_pair(this->_vec, 1, pend, odd, pend_cmp);
@@ -96,8 +110,7 @@ void				PmergeMe::_process_vector( void ) {
 
 void				PmergeMe::_process_deque( void ) {
 	this->_start_deq = std::clock();
-	std::deque<size_t> pend, odd;
-	std::deque<size_t> pend_cmp;
+	std::deque<size_t> pend, odd, pend_cmp;
 	recursive_pair(this->_deq, 1, pend, odd, pend_cmp);
 	// iterative_pair(this->_deq, 1, pend, odd, pend_cmp);
 

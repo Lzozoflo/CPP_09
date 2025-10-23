@@ -46,6 +46,8 @@ class PmergeMe {
 		void					_process_vector( void );
 		void					_process_deque( void );
 
+		bool					_sorted( void );
+
 	public:
 		PmergeMe(int ac, char **av);
 		~PmergeMe( void );
