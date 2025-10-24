@@ -58,5 +58,6 @@ RPN& RPN::operator=( const RPN &other ){
 	if (this != &other) {
 		this->_stock = other._stock;
 	}
+	return (*this);
 }
 RPN::~RPN( void ) {}

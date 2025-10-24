@@ -201,6 +201,7 @@ BitcoinExchange &BitcoinExchange::operator=( const BitcoinExchange &other ) {
 	if (this != &other){
 		this->_data_csv = other._data_csv;
 	}
+	return (*this);
 }
 
 BitcoinExchange::~BitcoinExchange( void ) { }
