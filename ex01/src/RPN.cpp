@@ -50,3 +50,13 @@ RPN::RPN(std::string str) {
 	}
 	std::cout << this->_stock.top() << std::endl;
 }
+
+RPN::RPN( const RPN &other ) {
+	*this = other;
+}
+RPN& RPN::operator=( const RPN &other ){
+	if (this != &other) {
+		this->_stock = other._stock;
+	}
+}
+RPN::~RPN( void ) {}

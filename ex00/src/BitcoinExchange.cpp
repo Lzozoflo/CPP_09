@@ -181,3 +181,26 @@ void	BitcoinExchange::print_data() {
 		std::cout << it->first << "," << it->second <<std::endl;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+BitcoinExchange::BitcoinExchange( const BitcoinExchange &other ) {
+	*this = other;
+}
+
+BitcoinExchange &BitcoinExchange::operator=( const BitcoinExchange &other ) {
+	if (this != &other){
+		this->_data_csv = other._data_csv;
+	}
+}
+
+BitcoinExchange::~BitcoinExchange( void ) { }

@@ -11,7 +11,7 @@ std::ostream&	operator<<(std::ostream& os, const std::deque<size_t>& vec);
 std::ostream&	operator<<(std::ostream& os, const std::vector<size_t>& vec);
 
 
-PmergeMe::PmergeMe( void ) : _nb_of_nb(0)  {}
+PmergeMe::PmergeMe( void ) : _nb_of_nb(0), _Before("nothing.") {}
 PmergeMe::~PmergeMe( void ) {}
 
 // PmergeMe &PmergeMe::operator=( const PmergeMe &other ) {
@@ -21,6 +21,23 @@ PmergeMe::~PmergeMe( void ) {}
 // 	}
 // 	return (*this);
 // }
+
+PmergeMe::PmergeMe( const PmergeMe &other ) : _nb_of_nb(0), _Before("nothing.") {
+	*this = other;
+}
+
+PmergeMe& PmergeMe::operator=(  const PmergeMe &other ){
+	if (this != &other) {
+		this->_start_vec = other._start_vec;
+		this->_vec = other._vec;
+		this->_end_vec = other._end_vec;
+		this->_start_deq = other._start_deq;
+		this->_deq = other._deq;
+		this->_end_deq = other._end_deq;
+	}
+}
+
+
 
 PmergeMe::PmergeMe(int ac, char **av) : _start_vec(0), _end_vec(0), _start_deq(0), _end_deq(0), _nb_of_nb(ac - 1) , _Before("Before:\t" + this->_stock(ac, av)) {
 	// (void)this->_nb_of_nb;

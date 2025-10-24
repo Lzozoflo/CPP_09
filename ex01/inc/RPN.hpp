@@ -15,6 +15,9 @@ class RPN {
 
 	private:
 		RPN( void );
+		RPN( const RPN &other );
+		RPN& operator=( const RPN &other );
+		~RPN( void );
 		std::stack<int> _stock;
 	public:
 		RPN(std::string str);

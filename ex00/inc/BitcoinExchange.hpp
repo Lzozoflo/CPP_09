@@ -22,6 +22,9 @@ class BitcoinExchange {
 
 	public:
 		BitcoinExchange( void );
+		BitcoinExchange( const BitcoinExchange &other );
+		BitcoinExchange &operator=( const BitcoinExchange &other );
+		~BitcoinExchange( void );
 		void	output( std::string str );
 };
 
