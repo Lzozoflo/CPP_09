@@ -94,7 +94,7 @@ static void			iterative_pair(Container &main, int level, Container &pend, Contai
 
 
 bool					PmergeMe::_sorted( void ) {
-	
+
 	size_t last = 0;
 	for (std::vector<size_t>::iterator it = this->_vec.begin(); it != this->_vec.end(); it++){
 		if (*it < last)
@@ -121,6 +121,7 @@ void				PmergeMe::_process_vector( void ) {
 void				PmergeMe::_process_deque( void ) {
 	this->_start_deq = std::clock();
 	std::deque<size_t> pend, odd, pend_cmp;
+
 	recursive_pair(this->_deq, 1, pend, odd, pend_cmp);
 	// iterative_pair(this->_deq, 1, pend, odd, pend_cmp);
 
@@ -214,7 +215,6 @@ static void			recursive_pair(Container &main, int level, Container &pend, Contai
 	pend_cmp.clear();
 	pend.clear();
 	clear_odd(main, odd);
-
 }
 
 /*recursive*/
@@ -342,7 +342,7 @@ static Container	_jacobsthal_number(long n) {
 		if (value > 1) {
 			for (long v = value; v != last_value; v--){
 				if (v <= n) {
-					jacobsthal_number_index.push_back((v - 2)); // (j - 0) for the jacobsthal_number | (j - 1) for index start from (0(1 for the *) * size_of_pair) - 1 and tadoum the index pend_cmp)
+					jacobsthal_number_index.push_back(v - 2); // (j - 0) for the jacobsthal_number | (j - 1) for index start from (0(1 for the *) * size_of_pair) - 1 and tadoum the index pend_cmp)
 					j++;
 				}
 			}

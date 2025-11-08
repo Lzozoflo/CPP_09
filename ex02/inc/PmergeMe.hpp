@@ -40,18 +40,18 @@ class PmergeMe {
 		const std::string		_Before;
 
 
-		PmergeMe( void );
 		std::string				_stock(int ac, char **av);
 		void					_expected_print( void );
 		void					_process_vector( void );
 		void					_process_deque( void );
-
+		
 		bool					_sorted( void );
-
-	public:
-		PmergeMe(int ac, char **av);
+		
+		PmergeMe( void );
 		PmergeMe( const PmergeMe &other );
 		PmergeMe& operator=(  const PmergeMe &other );
+	public:
+		PmergeMe(int ac, char **av);
 		~PmergeMe( void );
 
 };
