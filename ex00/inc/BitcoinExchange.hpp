@@ -19,11 +19,11 @@ class BitcoinExchange {
 		bool	pars_date(std::string &tmp);
 		float	convert(std::string tmp);
 		void	total_at_date(std::string key, float value);
+		BitcoinExchange( const BitcoinExchange &other );
+		BitcoinExchange &operator=( const BitcoinExchange &other );
 
 	public:
 		BitcoinExchange( void );
-		BitcoinExchange( const BitcoinExchange &other );
-		BitcoinExchange &operator=( const BitcoinExchange &other );
 		~BitcoinExchange( void );
 		void	output( std::string str );
 };

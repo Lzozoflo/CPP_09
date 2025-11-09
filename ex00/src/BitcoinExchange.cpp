@@ -3,9 +3,6 @@
 #include <fstream>
 #include <sstream>
 
-
-
-
 BitcoinExchange::BitcoinExchange(){
 
 	// 1. Open the config_file to read.
@@ -91,7 +88,15 @@ void	BitcoinExchange::output( std::string str ) {
 			continue;
 		}
 
-		this->total_at_date(key, value);
+		try
+		{
+			this->total_at_date(key, value);
+		}
+		catch(const std::string& e)
+		{
+			std::cout << RED << e << RESET"\n";
+		}
+		
 		// std::cout << key << " => " << value << " = not now" << std::endl;
 	}
 
@@ -112,14 +117,24 @@ void	BitcoinExchange::total_at_date(std::string key, float value) {
 	std::map<std::string, std::string>::iterator it = this->_data_csv.lower_bound(key);
 	std::string str;
 	if (it != this->_data_csv.end()) {
-		// std::cout << "Clé: " << it->first << ", Valeur: " << it->second << std::endl;
-		str = it->second;
+		
+		// std::cout << "1\tkey: "<< key<<" Clé: " << it->first << ", Valeur: " << it->second << std::endl;
+		
+		if (key == it->first)
+			str = it->second;
+		else{
+			if (it == this->_data_csv.begin())
+				throw (std::string("Error: no lower data '" + key + "'"));
+			it--;
+			str = it->second;
+		}
 	}
 	else {
-		std::map<std::string, std::string>::iterator iter = this->_data_csv.end();
-		iter--;
+
+		std::map<std::string, std::string>::iterator iter = --this->_data_csv.end();
+		// std::cout << "2\tkey: "<< key<<" Clé: " << iter->first << ", Valeur: " << iter->second << std::endl;
 		str = iter->second;
-		// std::cout << "Clé: " << iter->first << ", Valeur: " << iter->second << std::endl;
+
 	}
 	std::stringstream ss(str);
 	float res = 0;
@@ -159,8 +174,8 @@ bool	BitcoinExchange::pars_date(std::string &tmp) {
 	}
 	if (is_31day(mounth)){
 		return true;
-	} else if (!is_31day(mounth) && mounth != 2 && day == 31) {
-		return false;
+	} else if (!is_31day(mounth) && mounth != 2 && day < 31) {
+		return true;
 	} else if (mounth == 2) {
 		if (((years % 4 == 0 && years % 100 != 0) || years % 400 == 0) && day > 29) {
 			return false;
@@ -169,7 +184,6 @@ bool	BitcoinExchange::pars_date(std::string &tmp) {
 		}
 		return true;
 	} else {
-		std::cout<< RED << "false if i dont have thit one" << RESET << std::endl;
 		return false;
 	}
 }
