@@ -1,4 +1,4 @@
-.PHONY: all clean fclean re f fclear c clear
+.PHONY: all clean fclean re f fclear c clear creat_dir
 
 -include ./mk/source.mk
 
@@ -9,8 +9,8 @@
 #############################################################################################
 
 
-NAME				=		cpp
-# NAME				=		btc
+# NAME				=		cpp
+NAME				=		btc
 CC					=		c++
 INCLUDES			=		-I$(HEADERS_DIR)
 CPPFLAGS			=		-Wall -Werror -Wextra -std=c++98 $(INCLUDES) -g3
@@ -27,12 +27,12 @@ RM					=		rm -fr
 #############################################################################################
 
 
-OBJS_DIR			:=		.objs/
+OBJS_DIR			:=		./.objs/
 OBJS_FILES			:=		$(SRCS:.cpp=.o)
 OBJS				:=		$(addprefix $(OBJS_DIR), $(OBJS_FILES))
 
 
-DEPS_DIR			:=		deps/
+DEPS_DIR			:=		./.deps/
 DEPS_FILES			:=		$(OBJS_FILES:.o=.d)
 DEPS				:=		$(addprefix $(DEPS_DIR), $(DEPS_FILES))
 
@@ -52,14 +52,14 @@ $(NAME)				:		$(OBJS)
 
 
 
-$(DEPS_DIR) 		:
+creat_dir 		:
 		mkdir -p $(DEPS_DIR)
+		mkdir -p $(OBJS_DIR)
 
 
-$(OBJS_DIR)%.o : $(SRC_DIR)%.cpp Makefile | $(DEPS_DIR)
-	@mkdir -p $(dir $@)
-	@mkdir -p $(dir $(DEPS_DIR)$*)
-	$(CC) $(CPPFLAGS) $(INCLUDES) -MP -MMD -MF $(DEPS_DIR)$*.d -c $< -o $@
+$(OBJS_DIR)%.o : $(SRC_DIR)%.cpp Makefile | creat_dir
+	$(CC) $(CPPFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
+	@mv $(basename $@).d $(DEPS_DIR)
 
 #############################################################################################
 #																							#
