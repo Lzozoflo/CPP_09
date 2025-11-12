@@ -52,14 +52,15 @@ $(NAME)				:		$(OBJS)
 
 
 
-creat_dir 		:
+$(DEPS_DIR) 		:
 		mkdir -p $(DEPS_DIR)
 		mkdir -p $(OBJS_DIR)
 
 
-$(OBJS_DIR)%.o : $(SRC_DIR)%.cpp Makefile | creat_dir
+$(OBJS_DIR)%.o 		: $(SRC_DIR)%.cpp Makefile | $(DEPS_DIR)
 	$(CC) $(CPPFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
 	@mv $(basename $@).d $(DEPS_DIR)
+
 
 #############################################################################################
 #																							#

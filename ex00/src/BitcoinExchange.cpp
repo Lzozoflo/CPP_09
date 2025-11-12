@@ -123,8 +123,9 @@ void	BitcoinExchange::total_at_date(std::string key, float value) {
 		if (key == it->first)
 			str = it->second;
 		else{
+			
 			if (it == this->_data_csv.begin())
-				throw (std::string("Error: no lower data '" + key + "'"));
+				throw (std::string("Error: unknow lower date '" + key + "'"));
 			it--;
 			str = it->second;
 		}
