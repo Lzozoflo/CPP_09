@@ -36,7 +36,7 @@ RPN::RPN(std::string str) {
 				} else {
 					throw (std::string("Error"));
 				}
-				std::cout << val1 << ":"<< val2 << "="<< total << std::endl;
+				// std::cout << val1 << ":"<< val2 << "="<< total << std::endl;
 				this->_stock.push(total);
 			}
 		} else {
