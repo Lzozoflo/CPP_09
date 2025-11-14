@@ -8,18 +8,25 @@ RPN::RPN( void ) {}
 static bool issign(char c){
 	return (c == '/' || c == '*' || c == '-' || c == '+');
 }
+
+
 RPN::RPN(std::string str) {
 	bool space = false;
-	for (size_t i = 0; i < str.size(); i++)
+	size_t i;
+	for (i = 0; i < str.size(); i++)
 	{
 		if (!space && std::isdigit(str[i])) {
+
 			this->_stock.push(static_cast<int>(str[i]) - 48);
 			space = true;
+
 		} else if (!space && issign(str[i])) {
+
 			space = true;
 			if (this->_stock.size() < 2) {
 				throw (std::string("Error"));
 			} else {
+
 				int val1 = this->_stock.top();
 				this->_stock.pop();
 				int val2 = this->_stock.top();
@@ -32,7 +39,7 @@ RPN::RPN(std::string str) {
 				} else if (str[i] == '*'){
 					total = val1 * val2;
 				} else if (str[i] == '/' && val1 != 0 && val2 != 0){
-					total = val1 / val2;
+					total = val2 / val1;
 				} else {
 					throw (std::string("Error"));
 				}
@@ -48,6 +55,8 @@ RPN::RPN(std::string str) {
 			}
 		}
 	}
+	if (i <= 2 || this->_stock.size() > 1)
+		throw (std::string("Error"));
 	std::cout << this->_stock.top() << std::endl;
 }
 
