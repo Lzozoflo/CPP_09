@@ -10,7 +10,7 @@ BitcoinExchange::BitcoinExchange(){
 
 	// 2. Check if is open.
 	if (!sfile.is_open()) {
-		throw (std::string("Erreur : data.csv can't be open."));
+		throw (std::string("Error : data.csv can't be open."));
 	}
 	// 3. Read all the config_file.
 	std::string tmp;
@@ -51,7 +51,7 @@ void	BitcoinExchange::output( std::string str ) {
 
 	// 2. Check if is open.
 	if (!sfile.is_open()) {
-		throw (std::string("Erreur : "+ str +" can't be open."));
+		throw (std::string("Error : "+ str +" can't be open."));
 	}
 
 	// 3. Read all the config_file.
@@ -160,24 +160,25 @@ float	BitcoinExchange::convert(std::string tmp) {
 	return (res);
 }
 
-bool	is_31day(int mounth){
-	return (mounth == 1 || mounth == 3 || mounth == 5 || mounth == 7 || mounth == 8 || mounth == 10 || mounth == 12);
+bool	is_31day(int month){
+	return (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12);
 }
 
 bool	BitcoinExchange::pars_date(std::string &tmp) {
 	std::stringstream ss(tmp);
-	int years , mounth, day;
+	int years , month, day;
 	char first_char, second_char;
-	ss >> years >> first_char >> mounth >> second_char >> day;
 
-	if (!ss.eof() || ss.fail() || first_char != '-' || second_char != '-' || !(day > 0 && day < 32) || !(mounth > 0 && mounth < 13)) {
+	ss >> years >> first_char >> month >> second_char >> day;
+
+	if (!ss.eof() || ss.fail() || first_char != '-' || second_char != '-' || !(day > 0 && day < 32) || !(month > 0 && month < 13)) {
 		return false;
 	}
-	if (is_31day(mounth)){
+	if (is_31day(month)) {
 		return true;
-	} else if (!is_31day(mounth) && mounth != 2 && day < 31) {
+	} else if (!is_31day(month) && month != 2 && day < 31) {
 		return true;
-	} else if (mounth == 2) {
+	} else if (month == 2) {
 		if (((years % 4 == 0 && years % 100 != 0) || years % 400 == 0) && day > 29) {
 			return false;
 		} else if (!((years % 4 == 0 && years % 100 != 0) || years % 400 == 0) && day > 28){

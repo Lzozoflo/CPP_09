@@ -36,12 +36,13 @@ PmergeMe::PmergeMe(int ac, char **av) : _start_vec(0), _end_vec(0), _start_deq(0
 	// (void)this->_nb_of_nb;
 	if (!this->_sorted()) {
 		this->_process_vector();
-		this->_process_deque();
+		// this->_process_deque();
 	}
 	if (!this->_sorted()) {
 		std::cerr << RED"KO!\n"RESET;
 		
 		std::cout << YELLOW"main: "	<<	this->_vec<<	"\n"RESET;
+		std::cout << YELLOW"before: "	<<	this->_Before<<	"\n"RESET;
 		return ;
 	}
 	// std::cout << "VECTOR: "	<< this->_vec<< "\n";
@@ -91,7 +92,6 @@ static void			recursive_pair(Container &main, int level, Container &pend, Contai
 
 template <typename Container>
 static void			iterative_pair(Container &main, int level, Container &pend, Container &odd, Container &pend_cmp);
-
 
 
 
@@ -155,8 +155,6 @@ template <typename Container>	static void			set_odd(Container &main, Container &
 
 template <typename Container>	static void			print_by_size_of_pair(size_t size_of_pair, const Container &main, const Container &pend, const Container &odd);
 
-
-
 /*recursive*/
 template <typename Container>
 static void			recursive_pair(Container &main, int level, Container &pend, Container &odd, Container &pend_cmp) {
@@ -168,6 +166,7 @@ static void			recursive_pair(Container &main, int level, Container &pend, Contai
 	// std::cout << YELLOW"nb_of_pair: "<< nb_of_pair<<"\n"RESET;
 	// std::cout << GREEN"main.size():\t"<< main.size()<<RESET"\n";
 	// print_by_size_of_pair((level == 1) ? (size_of_pair + 1) : (size_of_pair), main, pend, odd);
+	// std::cout <<"\n\n";
 
 	size_t i = (size_of_pair << 1) - 1;
 	while (i < main.size())
@@ -324,7 +323,7 @@ static void			swap_for(Container &main, size_t index, size_t size_of_pair) {
 
 	for (size_t j = index - size_of_pair; size_of_pair > 0 ; size_of_pair--)
 	{
-		int tmp = main[j];
+		size_t tmp = main[j];
 		main[j--] = main[index];
 		main[index--] = tmp;
 	}
