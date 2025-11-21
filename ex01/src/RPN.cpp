@@ -5,7 +5,7 @@
 
 RPN::RPN( void ) {}
 
-static bool issign(char c){
+static bool issign(char c) {
 	return (c == '/' || c == '*' || c == '-' || c == '+');
 }
 
@@ -33,11 +33,11 @@ RPN::RPN(std::string str) {
 				this->_stock.pop();
 				int total = 0;
 				if (str[i] == '+'){
-					total = val1 + val2;
+					total = val2 + val1;
 				} else if (str[i] == '-'){
-					total = (val1 > val2) ? (val1 - val2) : (val2 - val1);
+					total = val2 - val1;
 				} else if (str[i] == '*'){
-					total = val1 * val2;
+					total = val2 * val1;
 				} else if (str[i] == '/' && val1 != 0 && val2 != 0){
 					total = val2 / val1;
 				} else {
