@@ -41,8 +41,8 @@ PmergeMe::PmergeMe(int ac, char **av) : _start_vec(0), _end_vec(0), _start_deq(0
 	if (!this->_sorted()) {
 		std::cerr << RED"KO!\n"RESET;
 		
-		std::cout << YELLOW"main: "	<<	this->_vec<<	"\n"RESET;
 		std::cout << YELLOW"before: "	<<	this->_Before<<	"\n"RESET;
+		std::cout << YELLOW"main: "	<<	this->_vec<<	"\n"RESET;
 		return ;
 	}
 	// std::cout << "VECTOR: "	<< this->_vec<< "\n";
