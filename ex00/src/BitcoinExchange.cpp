@@ -16,22 +16,40 @@ BitcoinExchange::BitcoinExchange(){
 	std::string tmp;
 	std::getline(sfile, tmp);
 	if (tmp.compare("date,exchange_rate")){
-		throw (std::string("bad format in data.csv. -> " + tmp + "\nexpected: 'date,exchange_rate'"));
+		throw (std::string("Error: bad format in data.csv. -> " + tmp + "\nexpected: 'date,exchange_rate'"));
 	}
 	while (std::getline(sfile, tmp)) {
 
-		if (tmp.find_first_of(',') == std::string::npos && tmp.find_first_of(',') != tmp.find_last_of(',')) {
-			throw (std::string("bad format in data.csv. -> " + tmp));
+		size_t pos = tmp.find_first_of(',');
+		if (pos == std::string::npos || pos != tmp.find_last_of(',')) {
+			throw (std::string("Error: bad format in data.csv. -> " + tmp));
 		}
-		std::string key = tmp.substr(0, tmp.find_first_of(','));
-		std::string value = tmp.substr(11, tmp.length());
+		std::string key = tmp.substr(0, pos);
+		
+		if (!this->pars_date(key)){
+			throw (std::string("Error: bad format in data.csv. -> " + tmp));
+		}
+
+		if (tmp.length() == pos + 1)
+			throw (std::string("Error: bad format in data.csv. -> " + tmp));
+
+		std::string value = tmp.substr(pos + 1, tmp.length());
+
+		// std::cout << RED << "key:"<<key<< " value:"<< value<< RESET << std::endl;
+
+		if (value.find_first_not_of("0123456789.") != std::string::npos || (value.find_first_of('.') == value.find_last_of('.') && value[0] == '.'))
+			throw (std::string("bad format in data.csv. -> " + tmp));
+
+
 		if (this->_data_csv.find(key) != this->_data_csv.end()) {
 
-			throw (std::string("same date in data.csv. -> " + tmp));
+			throw (std::string("Error: same date in data.csv. -> " + tmp));
 		}
 		this->_data_csv[key] = value;
 	}
 
+	if (this->_data_csv.size() == 0)
+		throw (std::string("Error: no data found"));
 	// Debug Print all the content stocked
 	// this->print_data();
 
@@ -58,17 +76,18 @@ void	BitcoinExchange::output( std::string str ) {
 	std::string tmp;
 	std::getline(sfile, tmp);
 	if (tmp.compare("date | value")){
-		throw (std::string("bad format in data.csv. -> " + tmp + "\nexpected: 'date | value'"));
+		throw (std::string("Error: bad format in data.csv. -> " + tmp + "\nexpected: 'date | value'"));
 	}
 	while (std::getline(sfile, tmp)) {
 
 		// std::cout << "tmp: "<< tmp << std::endl;
 
-		if (tmp.find_first_of(" | ") == std::string::npos || tmp.find_first_of(" | ") != tmp.find_last_of(" | ") - 2 ) {
+		size_t pos = tmp.find_first_of(" | ");
+		if (pos == std::string::npos || pos != tmp.find_last_of(" | ") - 2 ) {
 			std::cout << RED << "Error: bad format => '" << ((!tmp.empty()) ? tmp : "") << "'"RESET << std::endl;
 			continue;
 		}
-		std::string key = tmp.substr(0, tmp.find_first_of(" | "));
+		std::string key = tmp.substr(0, pos);
 		float value = 0;
 		try
 		{
