@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <limits>
 
 RPN::RPN( void ) {}
 
@@ -29,22 +30,26 @@ RPN::RPN(std::string str) {
 
 				int val1 = this->_stock.top();
 				this->_stock.pop();
+
 				int val2 = this->_stock.top();
 				this->_stock.pop();
-				int total = 0;
+
+				double total = 0;
 				if (str[i] == '+'){
 					total = val2 + val1;
 				} else if (str[i] == '-'){
 					total = val2 - val1;
 				} else if (str[i] == '*'){
 					total = val2 * val1;
-				} else if (str[i] == '/' && val1 != 0 && val2 != 0){
+				} else if (str[i] == '/' && val1 != 0){
 					total = val2 / val1;
 				} else {
 					throw (std::string("Error"));
 				}
-				// std::cout << val1 << ":"<< val2 << "="<< total << std::endl;
-				this->_stock.push(total);
+				// std::cout << val1 << " "<< str[i] << " "<< val2 << " = "<< total << std::endl;
+				if (total > std::numeric_limits<int>::max() || total < std::numeric_limits<int>::min())
+					throw (std::string("Error"));
+				this->_stock.push(static_cast<int>(total));
 			}
 		} else {
 			if (space && str[i] == ' ') {

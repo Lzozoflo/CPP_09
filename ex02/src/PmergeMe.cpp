@@ -36,7 +36,7 @@ PmergeMe::PmergeMe(int ac, char **av) : _start_vec(0), _end_vec(0), _start_deq(0
 	// (void)this->_nb_of_nb;
 	if (!this->_sorted()) {
 		this->_process_vector();
-		this->_process_deque();
+		// this->_process_deque();
 	}
 	if (!this->_sorted()) {
 		std::cerr << RED"KO!\n"RESET;
@@ -51,8 +51,18 @@ PmergeMe::PmergeMe(int ac, char **av) : _start_vec(0), _end_vec(0), _start_deq(0
 	this->_expected_print();
 }
 
-std::string		PmergeMe::_stock(int ac, char **av) {
+static void all_digits(int ac, char **av) {
 
+	for (int i = 1; i < ac; i++)
+	{
+		std::string str(av[i]);
+		if (str.find_first_not_of("0123456789") != std::string::npos)
+			throw (std::string("Error"));
+	}
+}
+
+std::string		PmergeMe::_stock(int ac, char **av) {
+	all_digits(ac ,av);
 	for (int i = 1; i < ac; i++)
 	{
 		std::stringstream ss(av[i]);
