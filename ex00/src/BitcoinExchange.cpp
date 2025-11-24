@@ -65,7 +65,7 @@ void	BitcoinExchange::output( std::string str ) {
 		// std::cout << "tmp: "<< tmp << std::endl;
 
 		if (tmp.find_first_of(" | ") == std::string::npos || tmp.find_first_of(" | ") != tmp.find_last_of(" | ") - 2 ) {
-			std::cout << RED << "Error: bad format => '" << ((!tmp.empty()) ? tmp : "") << "'" <<RESET << std::endl;
+			std::cout << RED << "Error: bad format => '" << ((!tmp.empty()) ? tmp : "") << "'"RESET << std::endl;
 			continue;
 		}
 		std::string key = tmp.substr(0, tmp.find_first_of(" | "));
@@ -78,13 +78,13 @@ void	BitcoinExchange::output( std::string str ) {
 			continue;
 		} catch (const int &v) {
 			if (v == 1) {
-				std::cout << RED << "Error: bad format => " << tmp << RESET << std::endl;
+				std::cout << RED << "Error: bad format => '" << tmp << "'"RESET << std::endl;
 				continue;
 			}
 		}
 
 		if (!this->pars_date(key)){
-			std::cout << RED << "Error: bad input => " << key << RESET << std::endl;
+			std::cout << RED << "Error: bad format => '" << key << "'"RESET << std::endl;
 			continue;
 		}
 
