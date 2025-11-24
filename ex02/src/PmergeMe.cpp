@@ -36,7 +36,7 @@ PmergeMe::PmergeMe(int ac, char **av) : _start_vec(0), _end_vec(0), _start_deq(0
 	// (void)this->_nb_of_nb;
 	if (!this->_sorted()) {
 		this->_process_vector();
-		// this->_process_deque();
+		this->_process_deque();
 	}
 	if (!this->_sorted()) {
 		std::cerr << RED"KO!\n"RESET;
