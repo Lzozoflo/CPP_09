@@ -112,9 +112,9 @@ bool					PmergeMe::_sorted( void ) {
 
 	size_t last = 0;
 	for (std::vector<size_t>::iterator it = this->_vec.begin(); it != this->_vec.end(); it++){
-		if (*it < last){
+		if (*it < last) {
 
-			std::cerr << "last:" << last << " it:" << *it  <<"\n";
+			// std::cerr << "last:" << last << " it:" << *it  <<"\n";
 			return false;
 		}
 		last = *it;
