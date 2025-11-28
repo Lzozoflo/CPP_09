@@ -12,6 +12,7 @@ BitcoinExchange::BitcoinExchange(){
 	if (!sfile.is_open()) {
 		throw (std::string("Error : data.csv can't be open."));
 	}
+	
 	// 3. Read all the config_file.
 	std::string tmp;
 	std::getline(sfile, tmp);
@@ -24,6 +25,7 @@ BitcoinExchange::BitcoinExchange(){
 		if (pos == std::string::npos || pos != tmp.find_last_of(',')) {
 			throw (std::string("Error: bad format in data.csv. -> " + tmp));
 		}
+		
 		std::string key = tmp.substr(0, pos);
 		
 		if (!this->pars_date(key)){

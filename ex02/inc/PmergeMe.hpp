@@ -46,6 +46,7 @@ class PmergeMe {
 		void					_process_deque( void );
 		
 		bool					_sorted( void );
+		bool					_sortedec( void );
 		
 		PmergeMe( void );
 		PmergeMe( const PmergeMe &other );

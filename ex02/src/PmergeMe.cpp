@@ -36,15 +36,18 @@ PmergeMe::PmergeMe(int ac, char **av) : _start_vec(0), _end_vec(0), _start_deq(0
 	// (void)this->_nb_of_nb;
 	if (!this->_sorted()) {
 		this->_process_vector();
-		// this->_process_deque();
+		this->_process_deque();
 	}
 	if (!this->_sorted()) {
 		std::cerr << RED"KO!\n"RESET;
+		this->_sortedec();
 		
 		std::cout << YELLOW"before: "	<<	this->_Before<<	"\n"RESET;
-		std::cout << YELLOW"main: "	<<	this->_vec<<	"\n"RESET;
+		std::cout << YELLOW"main vec: "	<<	this->_vec<<	"\n"RESET;
+		std::cout << YELLOW"main deq: "	<<	this->_deq<<	"\n"RESET;
 		return ;
-	}
+	} else
+		this->_sortedec();
 	// std::cout << "VECTOR: "	<< this->_vec<< "\n";
 	// std::cout << "DEQUE: "	<< this->_deq<< "\n";
 
@@ -109,13 +112,29 @@ bool					PmergeMe::_sorted( void ) {
 
 	size_t last = 0;
 	for (std::vector<size_t>::iterator it = this->_vec.begin(); it != this->_vec.end(); it++){
-		if (*it < last)
+		if (*it < last){
+
+			std::cerr << "last:" << last << " it:" << *it  <<"\n";
 			return false;
+		}
 		last = *it;
 	}
 	return true;
 }
 
+bool					PmergeMe::_sortedec( void ) {
+
+	size_t last = 0;
+	for (std::deque<size_t>::iterator it = this->_deq.begin(); it != this->_deq.end(); it++){
+		if (*it < last){
+
+			std::cerr << "deq failed too\n";
+			return false;
+		}
+		last = *it;
+	}
+	return true;
+}
 void				PmergeMe::_process_vector( void ) {
 
 	this->_start_vec = std::clock();
@@ -247,6 +266,7 @@ static void			iterative_pair(Container &main, int level, Container &pend, Contai
 		// std::cout << YELLOW"nb_of_pair: "<< nb_of_pair<<"\n"RESET;
 		// std::cout << GREEN"main.size():\t"<< main.size()<<RESET"\n";
 		// print_by_size_of_pair((level == 1) ? (size_of_pair + 1) : (size_of_pair), main, pend, odd);
+
 		size_t i = (size_of_pair << 1) - 1;
 		while (i < main.size())
 		{
@@ -265,9 +285,9 @@ static void			iterative_pair(Container &main, int level, Container &pend, Contai
 
 
 	while (level) {
-		level--;
 		size_t size_of_pair = 1 << (level - 1);
 		size_t nb_of_pair = (level == 1) ? ((main.size() / size_of_pair) >> 1) : (main.size() / size_of_pair) ;// a(x) b(x)
+		level--;
 
 		if (main.size() != nb_of_pair * size_of_pair && size_of_pair != 1) {
 			set_odd(main, odd, (main.size() - (nb_of_pair * size_of_pair)));
@@ -288,7 +308,7 @@ static void			iterative_pair(Container &main, int level, Container &pend, Contai
 		for (size_t i = 0; i < jacobsthal_number_index.size(); i++)
 		{
 			if (index_max < jacobsthal_number_index[i] + i)
-			index_max = jacobsthal_number_index[i] + i;
+				index_max = jacobsthal_number_index[i] + i;
 			int idx = binary_search(main, pend_cmp[jacobsthal_number_index[i]], index_max, size_of_pair);
 
 			idx = ((idx == 0) ? (0) : (idx * size_of_pair));

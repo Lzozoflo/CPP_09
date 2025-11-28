@@ -47,7 +47,7 @@ RPN::RPN(std::string str) {
 					throw (std::string("Error"));
 				}
 				// std::cout << val1 << " "<< str[i] << " "<< val2 << " = "<< total << std::endl;
-				if (total > std::numeric_limits<int>::max() || total < std::numeric_limits<int>::min())
+				if (total > static_cast<double>(std::numeric_limits<int>::max()) || total < static_cast<double>(std::numeric_limits<int>::min()))
 					throw (std::string("Error"));
 				this->_stock.push(static_cast<int>(total));
 			}
