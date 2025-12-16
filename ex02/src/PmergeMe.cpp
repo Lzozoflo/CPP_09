@@ -39,12 +39,12 @@ PmergeMe::PmergeMe(int ac, char **av) : _start_vec(0), _end_vec(0), _start_deq(0
 		this->_process_deque();
 	}
 	if (!this->_sorted()) {
-		std::cerr << RED"KO!\n"RESET;
+		std::cerr << RED"KO!\n" RESET;
 		this->_sortedec();
 		
-		std::cout << YELLOW"before: "	<<	this->_Before<<	"\n"RESET;
-		std::cout << YELLOW"main vec: "	<<	this->_vec<<	"\n"RESET;
-		std::cout << YELLOW"main deq: "	<<	this->_deq<<	"\n"RESET;
+		std::cout << YELLOW"before: "	<<	this->_Before<<	"\n" RESET;
+		std::cout << YELLOW"main vec: "	<<	this->_vec<<	"\n" RESET;
+		std::cout << YELLOW"main deq: "	<<	this->_deq<<	"\n" RESET;
 		return ;
 	} else
 		this->_sortedec();
@@ -71,7 +71,7 @@ std::string		PmergeMe::_stock(int ac, char **av) {
 		std::stringstream ss(av[i]);
 		size_t res = 0;
 		ss >> res;
-		if (res < 1 || ss.eof() == false || ss.fail())
+		if (ss.eof() == false || ss.fail())
 			throw (std::string("Error"));
 
 		this->_vec.push_back(res);
@@ -191,8 +191,8 @@ static void			recursive_pair(Container &main, int level, Container &pend, Contai
 	size_t size_of_pair = 1 << (level - 1);
 	size_t nb_of_pair = (level == 1) ? ((main.size() / size_of_pair) >> 1) : (main.size() / size_of_pair) ;// a(x) b(x)
 
-	// std::cout << YELLOW"size_of_pair: "<< size_of_pair<<"\n"RESET;
-	// std::cout << YELLOW"nb_of_pair: "<< nb_of_pair<<"\n"RESET;
+	// std::cout << YELLOW"size_of_pair: "<< size_of_pair<<"\n" RESET;
+	// std::cout << YELLOW"nb_of_pair: "<< nb_of_pair<<"\n" RESET;
 	// std::cout << GREEN"main.size():\t"<< main.size()<<RESET"\n";
 	// print_by_size_of_pair((level == 1) ? (size_of_pair + 1) : (size_of_pair), main, pend, odd);
 	// std::cout <<"\n\n";
@@ -211,13 +211,13 @@ static void			recursive_pair(Container &main, int level, Container &pend, Contai
 	// exit of the recursive
 
 	
-	// std::cout << YELLOW"main: "	<<	main	<<	"\n"RESET;
-	// std::cout << YELLOW"size_of_pair: "<< size_of_pair<<"\n"RESET;
+	// std::cout << YELLOW"main: "	<<	main	<<	"\n" RESET;
+	// std::cout << YELLOW"size_of_pair: "<< size_of_pair<<"\n" RESET;
 	level--;
 	if (main.size() != nb_of_pair * size_of_pair && size_of_pair != 1) {
 		set_odd(main, odd, (main.size() - (nb_of_pair * size_of_pair)));
 	}
-	// std::cout << YELLOW"level: "<< level--<<"\n"RESET;
+	// std::cout << YELLOW"level: "<< level--<<"\n" RESET;
 	set_pend(main, pend, size_of_pair);
 	set_pend_cmp(pend, pend_cmp, size_of_pair);
 
@@ -225,10 +225,10 @@ static void			recursive_pair(Container &main, int level, Container &pend, Contai
 
 	// print_by_size_of_pair((level == 1) ? (size_of_pair + 1) : (size_of_pair), main, pend, odd);
 
-	// std::cout << PURPLE"pend_cmp: "	<<	pend_cmp	<<	"\npend_cmp.size(): "	<<	pend_cmp.size()	<<	"\n"RESET;
-	// std::cout << BLUE"_jacobsthal_number: "	<<	jacobsthal_number_index	<<	"\n"RESET;
-	// std::cout << BLUE"pend: "	<<	pend	<<	"\n"RESET;
-	// std::cout << BLUE"odd: "	<<	odd		<<	"\n"RESET;
+	// std::cout << PURPLE"pend_cmp: "	<<	pend_cmp	<<	"\npend_cmp.size(): "	<<	pend_cmp.size()	<<	"\n" RESET;
+	// std::cout << BLUE"_jacobsthal_number: "	<<	jacobsthal_number_index	<<	"\n" RESET;
+	// std::cout << BLUE"pend: "	<<	pend	<<	"\n" RESET;
+	// std::cout << BLUE"odd: "	<<	odd		<<	"\n" RESET;
 
 	size_t index_max = 0;
 	for (size_t i = 0; i < jacobsthal_number_index.size(); i++)
@@ -262,8 +262,8 @@ static void			iterative_pair(Container &main, int level, Container &pend, Contai
 		size_t size_of_pair = 1 << (level - 1);
 		// size_t nb_of_pair = (level == 1) ? ((main.size() / size_of_pair) >> 1) : (main.size() / size_of_pair) ;// a(x) b(x)
 
-		// std::cout << YELLOW"size_of_pair: "<< size_of_pair<<"\n"RESET;
-		// std::cout << YELLOW"nb_of_pair: "<< nb_of_pair<<"\n"RESET;
+		// std::cout << YELLOW"size_of_pair: "<< size_of_pair<<"\n" RESET;
+		// std::cout << YELLOW"nb_of_pair: "<< nb_of_pair<<"\n" RESET;
 		// std::cout << GREEN"main.size():\t"<< main.size()<<RESET"\n";
 		// print_by_size_of_pair((level == 1) ? (size_of_pair + 1) : (size_of_pair), main, pend, odd);
 
@@ -299,10 +299,10 @@ static void			iterative_pair(Container &main, int level, Container &pend, Contai
 
 		// print_by_size_of_pair((level == 1) ? (size_of_pair + 1) : (size_of_pair), main, pend, odd);
 
-		// std::cout << PURPLE"pend_cmp: "	<<	pend_cmp	<<	"\npend_cmp.size(): "	<<	pend_cmp.size()	<<	"\n"RESET;
-		// std::cout << BLUE"_jacobsthal_number: "	<<	jacobsthal_number_index	<<	"\n"RESET;
-		// std::cout << BLUE"pend: "	<<	pend	<<	"\n"RESET;
-		// std::cout << BLUE"odd: "	<<	odd		<<	"\n"RESET;
+		// std::cout << PURPLE"pend_cmp: "	<<	pend_cmp	<<	"\npend_cmp.size(): "	<<	pend_cmp.size()	<<	"\n" RESET;
+		// std::cout << BLUE"_jacobsthal_number: "	<<	jacobsthal_number_index	<<	"\n" RESET;
+		// std::cout << BLUE"pend: "	<<	pend	<<	"\n" RESET;
+		// std::cout << BLUE"odd: "	<<	odd		<<	"\n" RESET;
 
 		size_t index_max = 0;
 		for (size_t i = 0; i < jacobsthal_number_index.size(); i++)
@@ -492,7 +492,7 @@ static void			print_by_size_of_pair(size_t size_of_pair, const Container &main, 
 				std::cout << " ";
 			std::cout << main[j];
 		}
-		std::cout << "] "RESET;
+		std::cout << "] " RESET;
 	}
 	std::cout << "\n";
 	(void)pend;(void)odd;
