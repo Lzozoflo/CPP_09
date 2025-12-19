@@ -192,7 +192,7 @@ bool	BitcoinExchange::pars_date(std::string &tmp) {
 
 	ss >> years >> first_char >> month >> second_char >> day;
 
-	if (!ss.eof() || ss.fail() || first_char != '-' || second_char != '-' || !(day > 0 && day < 32) || !(month > 0 && month < 13)) {
+	if (!ss.eof() || ss.fail() || first_char != '-' || second_char != '-' || !(years > 999 && years < 10000 ) || !(day > 0 && day < 32) || !(month > 0 && month < 13)) {
 		return false;
 	}
 	if (is_31day(month)) {
